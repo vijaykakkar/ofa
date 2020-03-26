@@ -14,7 +14,16 @@
        - default
        - remotesec1
       network: "{{ network_name }}"
+      auto_ip: false
+      meta:
+        hostname=winad1.example.com
     register: os_server_instance
 
   - name: debug os_server_instance
     debug: var=os_server_instance
+
+  - name: Add Host To Inventory
+    add_host:
+      groups: windows
+      name: "{{ os_server_instance.openstack.private_v4 }}"
+
