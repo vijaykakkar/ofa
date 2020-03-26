@@ -1,0 +1,9 @@
+- name: Win Updates
+  hosts: windows
+  tasks:
+  - name: Apply Critical Updates
+    win_update:
+      category_names: CriticalUpdates
+      reboot: true
+      blacklist:
+        - KB4056892

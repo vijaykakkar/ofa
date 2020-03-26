@@ -1,0 +1,13 @@
+- name: Create AWS resources
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: Create a security group
+    ec2_group:
+     name: DO457Group
+     region: "{{ aws_region }}"
+     state: absent
+    register: delete_sg
+  - name: debug module
+    debug: var=delete_sg

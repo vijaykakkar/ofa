@@ -1,0 +1,8 @@
+- name: Downgrade Chocolatey
+  hosts: windows
+  tasks:
+  - name: Windows Chocolatey
+    win_chocolatey:
+      name: "chocolatey"
+      state: downgrade
+      version: 0.10.11

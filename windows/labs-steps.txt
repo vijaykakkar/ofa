@@ -1,0 +1,15 @@
+1. Provision RHEL and Windows Machine
+2. Install Ansible and Configure Inventory File
+3. Prepare Control Node To Support Windows
+yum install -y python-devel krb5-devel krb5-libs krb5-workstation python-pip gcc
+
+4. Prepare Windows Machine by running ConfigureRemotingForAnsible.ps1
+https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 --> only for testing not recommended for prod,
+do all the steps manually, ntlm connection, better write, install winrm during bootstrap. default is basic auth, you can enable kerberos ( if you are in AD Domain, use existing krb ) and ntlm ( older ), credssp ( recommened ) provides cred delegation more like sudo.
+
+Install pip install requests-credssp to use credssp authentication setting.
+
+5. Deploy/Create Windows Features
+6. ldapsearch -x -H ldap://ad1.6ffe.example.opentlc.com -D "CN=Administrator,CN=Users,DC=ad1,DC=6ffe,DC=example,DC=opentlc,DC=com" -b "dc=ad1,dc=6ffe,dc=example,dc=opentlc,dc=com" -w $WINDOWS_ADMINISTRATOR_PASSWORD  # to search ldap schema
+7. Install pywinrm using pip on control node.
+8. dnf install python*winrm on control node -> only required if connection issues.

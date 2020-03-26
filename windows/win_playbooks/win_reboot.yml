@@ -1,0 +1,7 @@
+- name: Windows Maintaince
+  hosts: windows
+  tasks:
+  - name: reboot servers
+    win_reboot:
+      reboot_timeout: 30
+      shutdown_timeout: 20

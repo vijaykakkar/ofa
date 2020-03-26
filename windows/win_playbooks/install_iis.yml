@@ -1,0 +1,15 @@
+- name: Install IIS Service
+  hosts: all
+  tasks:
+  - name: Install IIS Service
+    win_feature:
+      name: Web-Server
+      state: present
+  - name: Start IIS Service
+    win_service:
+       name: W3Svc
+       state: started
+  - name: IIS Welcome Page
+    win_copy:
+       content: "Hello from {{ ansible_facts['fqdn']\n }}"
+       dest: C:\Inetpub\wwwroot\index.html

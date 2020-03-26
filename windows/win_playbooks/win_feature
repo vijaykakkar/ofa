@@ -1,0 +1,14 @@
+- name: Enable Windows Feature
+  hosts: all
+  tasks:
+  - name: Install DHCP Server
+    win_feature:
+        name: DHCP
+        state: present
+        include_management_tools: true
+    register: dhcp_feature
+  - name: Debug dhcp_feature
+    debug: var=dhcp_feature
+  - name: Reboot if required
+    win_reboot:
+    when: dhcp_feature.reboot_required

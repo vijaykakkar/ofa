@@ -1,0 +1,12 @@
+- name: Win Service Start
+  hosts: windows
+  tasks:
+  - name: Start Win Service
+    win_service:
+      name: spooler
+      state: started
+
+    register: win_service_status
+
+  - name: debug win service
+    debug: var=win_service_status

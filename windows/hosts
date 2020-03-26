@@ -1,0 +1,21 @@
+[all:vars]
+timeout=60
+ansible_become=yes
+ansible_user=ec2-user
+
+[all:children]
+support
+windows
+
+[support]
+support1.6ffe.internal ssh_host=support1.6ffe.internal
+
+[windows]
+ad1.6ffe.internal ssh_host=ad1.6ffe.example.opentlc.com ansible_password=jVMijRwLbI02gFCo2xkjlZ9lxEA7bm7zgg==
+
+[windows:vars]
+ansible_connection=winrm
+ansible_user=Administrator
+ansible_winrm_server_cert_validation=ignore
+ansible_become=false
+

@@ -1,0 +1,9 @@
+- name: check service status
+  hosts: windows
+  tasks:
+  - name: check service status
+    win_shell: Get-Service -Name WinRM
+    register: win_service_status
+
+  - name: debug service status
+    debug: var=win_service_status

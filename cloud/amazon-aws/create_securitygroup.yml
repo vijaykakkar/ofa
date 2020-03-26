@@ -1,0 +1,25 @@
+- name: Create AWS resources
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: Create a security group
+    ec2_group:
+     name: DO457Group
+     description: "Ansible Security Group"
+     region: "{{ aws_region }}"
+     vpc_id: "{{ vpc_id }}"
+     aws_access_key: "{{ aws_access_key }}"
+     aws_secret_key: "{{ aws_secret_key }}"
+     rules:
+       - proto: all
+         cidr_ip: "{{ my_local_cidr_ip }}"
+       - proto: all
+         group_name: DO457Group
+     rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0
+    register: firewall
+  - name: debug module
+    debug:
+      var: firewall

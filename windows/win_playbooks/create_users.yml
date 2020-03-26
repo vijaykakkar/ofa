@@ -1,0 +1,7 @@
+- name: Create a User on Windows
+  hosts: windows
+  tasks:
+  - name: Create a User
+    win_user:
+      name: vijay
+      state: present
