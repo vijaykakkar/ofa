@@ -5,14 +5,12 @@
   - name: Launch a New Instance with Network and Metadata
     os_server:
       state: present
-  #    auth:
-  #      auth_url: http://51.79.82.110:5000/v3
-  #      username: vijay
-  #      password: "{{ secure_pass }}"
-  #      project_name: vijay
-      name: vm1
-      image: windows2016
-      key_name: pubkey
+      name: "{{ instance_name }}"
+      image: "{{ image_name }}"
+      key_name: "{{ pubkey_name }}"
       wait: yes
-      flavor: m1.small
-      network: private
+      flavor: "{{ flavor_name }}"
+      security_groups:
+       - default
+       - remotesec1
+      network: "{{ network_name }}"
