@@ -1,0 +1,18 @@
+- name: Launch OpenStack Instance
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Launch a New Instance with Network and Metadata
+    os_server:
+      state: present
+  #    auth:
+  #      auth_url: http://51.79.82.110:5000/v3
+  #      username: vijay
+  #      password: "{{ secure_pass }}"
+  #      project_name: vijay
+      name: vm1
+      image: windows2016
+      key_name: pubkey
+      wait: yes
+      flavor: m1.small
+      network: private
