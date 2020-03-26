@@ -14,3 +14,7 @@
        - default
        - remotesec1
       network: "{{ network_name }}"
+    register: os_server_instance
+
+  - name: debug os_server_instance
+    debug: var=os_server_instance
