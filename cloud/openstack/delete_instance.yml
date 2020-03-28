@@ -5,3 +5,4 @@
   - name: Delete OpenStack Instance
     os_server:
       state: present
+      name: "{{ instance_name }}"
