@@ -13,3 +13,6 @@
     win_copy:
        content: "Hello from {{ ansible_facts['fqdn']\n }}"
        dest: C:\Inetpub\wwwroot\index.html
+  - name: Display the web url
+    debug:
+      msg: "http://{{ ansible_host }}"
