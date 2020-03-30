@@ -15,12 +15,12 @@
        - remotesec1
       network: "{{ network_name }}"
       auto_ip: false
-      userdata: |
-        #ps1
 #        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
 #        Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP-PUBLIC' -RemoteAddress Any
-        netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
-        Enable-WSManCredSSP -Role Server -Force
+      userdata: |
+        #ps1
+         netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
+         Enable-WSManCredSSP -Role Server -Force
       meta:
         group=windows
     register: os_server_instance
