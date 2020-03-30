@@ -19,11 +19,22 @@
         #ps1
         Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
       meta:
-        hostname=winad1.example.com
+        group=windows
+        hostname={{ instance_name }}
     register: os_server_instance
 
   - name: debug os_server_instance
     debug: var=os_server_instance
 
-  - name: Associate host group 
-    shell: tower-cli host associate  --host "{{os_server_instance.private_v4 }}" --group windows
+#  - name: Add Host to a Group
+#    tower_host:
+#      name: "{{ os_server_instance.openstack.name }}"
+#      description: Windows Host
+#      inventory: OpenStack
+#      state: present
+#      tower_config_file: /home/cloud-user/.tower_cli.cfg
+#      variables:
+#        ansible_host: "{{ os_server_instance.openstack.private_v4 }}"
+
+#  - name: Associate host group 
+#    shell: tower-cli host associate  --host "{{ os_server_instance.openstack.private_v4 }}" --group windows
