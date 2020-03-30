@@ -17,9 +17,14 @@
       auto_ip: false
 #        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
 #        Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP-PUBLIC' -RemoteAddress Any
+#        netsh advfirewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action-allow
+#        netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
       userdata: |
         #ps1
-         netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
+         Set-Service -Name "WinRM" -StartupType Automatic
+         Start-Service -Name "WinRM" -ErrorAction Stop
+         netsh advfirewall add rule profile=any name="Allow WinRM HTTP" dir=in localport=5985 protocol=TCP action=allow
+         netsh advfirewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
          Enable-WSManCredSSP -Role Server -Force
       meta:
         group=windows
