@@ -4,5 +4,9 @@
   tasks:
   - name: Delete OpenStack Instance
     os_server:
+<<<<<<< HEAD
       state: absent
+=======
+      state: present
+>>>>>>> b7dcb9bb6f8f923004667330dfc567d1315e0dc1
       name: "{{ instance_name }}"
