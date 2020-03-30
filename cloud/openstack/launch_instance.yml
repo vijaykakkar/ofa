@@ -22,8 +22,5 @@
   - name: debug os_server_instance
     debug: var=os_server_instance
 
-  - name: Add Host To Inventory
-    add_host:
-      groups: windows
-      name: "{{ os_server_instance.openstack.private_v4 }}"
-
+  - name: Associate host group 
+     shell: tower-cli host associate  --host "{{os_server_instance.private_v4 }}" --group windows
