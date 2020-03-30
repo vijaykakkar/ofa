@@ -18,6 +18,7 @@
       userdata: |
         #ps1
         Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+        Enable-WSManCredSSP -Role Server -Force
       meta:
         group=windows
     register: os_server_instance
