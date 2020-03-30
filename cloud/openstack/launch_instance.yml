@@ -20,7 +20,6 @@
         Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
       meta:
         group=windows
-        hostname={{ instance_name }}
     register: os_server_instance
 
   - name: debug os_server_instance
