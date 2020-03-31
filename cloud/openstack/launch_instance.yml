@@ -21,10 +21,11 @@
 #        netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
       userdata: |
         #ps1
-          $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
-          $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
-          (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
-          powershell.exe -ExecutionPolicy ByPass -File $file -DisableBasicAuth -EnableCredSSP
+         powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
+#          $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+#          $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+#          (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+#          powershell.exe -ExecutionPolicy ByPass -File $file -DisableBasicAuth -EnableCredSSP
 #         Set-Service -Name "WinRM" -StartupType Automatic
 #         Start-Service -Name "WinRM" -ErrorAction Stop
 #         netsh advfirewall add rule profile=any name="Allow WinRM HTTP" dir=in localport=5985 protocol=TCP action=allow
