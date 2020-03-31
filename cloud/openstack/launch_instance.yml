@@ -19,19 +19,21 @@
       meta:
         group=windows
     register: os_server_instance
+    async: 7200
+    poll: 0
 
 
   - name: Wait for instance creation to complete
-    async_status: jid="{{ item.ansible_job_id }}"
+    async_status: jid={{ item.ansible_job_id }}
     register: instances
     until: instances.finished
     retries: 300
     delay: 10
-    with_items: "{{ os_server_instance.results }}"
+    loop: "{{ os_server_instance.results }}"
 
   - name: Waiting for servers to come online
     wait_for:
       host: "{{ item.openstack.public_v4|default(item.openstack.interface_ip) }}"
       port: 5986
       timeout: 600
-    with_items: "{{ instances.results }}"
+    loop: "{{ instances.results }}"
