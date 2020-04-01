@@ -7,7 +7,6 @@
       state: present
       name: "{{ instance_name }}"
       image: "{{ image_name }}"
-#      key_name: "{{ pubkey_name }}"
       wait: yes
       flavor: "{{ flavor_name }}"
       security_groups:
@@ -22,14 +21,14 @@
     async: 7200
     poll: 0
 
-
-#  - name: Wait for instance creation to complete
-#    async_status: jid={{ item.ansible_job_id }}
-#    register: instances
-#    until: instances.finished
-#    retries: 300
-#    delay: 10
-#    loop: "{{ os_server_instance.results }}"
+  - name: Wait for instance creation to complete
+    async_status: jid={{ item.ansible_job_id }}
+    register: instances
+    until: instances.finished
+    retries: 300
+    delay: 10
+    loop:
+    - "{{ os_server_instance }}"
 
   - name: Waiting for servers to come online
     wait_for:
