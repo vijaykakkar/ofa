@@ -19,6 +19,17 @@
        src: files/index.html
       # content: "Hello from {{ ansible_facts['fqdn']\n }}"
        dest: C:\Inetpub\wwwroot\index.html
+
+  - name: IIS Pic Update 1
+    win_copy:
+       src: files/Arjun_Ansible-1.jpeg
+       dest: C:\Inetpub\wwwroot\Arjun_Ansible-1.jpeg
+
+  - name: IIS Pic Update 2
+    win_copy:
+       src: files/Arjun_Ansible-2.jpeg
+       dest: C:\Inetpub\wwwroot\Arjun_Ansible-2.jpeg
+
   - name: Display the web url
     debug:
       msg: "http://{{ ansible_host }}"
