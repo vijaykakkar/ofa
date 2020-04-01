@@ -30,9 +30,9 @@
     loop:
     - "{{ os_server_instance }}"
 
-  - name: Waiting for servers to come online
-    wait_for:
-      host: "{{ item.openstack.public_v4|default(item.openstack.interface_ip) }}"
-      port: 5986
-      timeout: 600
-    loop: "{{ instances.results }}"
+#  - name: Waiting for servers to come online
+#    wait_for:
+#      host: "{{ item.openstack.public_v4|default(item.openstack.interface_ip) }}"
+#      port: 5986
+#      timeout: 600
+#    loop: "{{ instances.results }}"
