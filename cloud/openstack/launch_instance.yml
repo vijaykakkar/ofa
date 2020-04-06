@@ -7,6 +7,7 @@
       state: present
       name: "{{ instance_name }}"
       image: "{{ image_name }}"
+      key_name: pubkey
       wait: yes
       flavor: "{{ flavor_name }}"
       security_groups:
