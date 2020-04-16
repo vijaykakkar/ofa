@@ -1,5 +1,6 @@
 [windows]
-192.99.198.203
+win1.example.com ansible_host=192.168.0.17
+win2.example.com ansible_host=192.168.0.24
 
 [windows:vars]
 ansible_connection=winrm
