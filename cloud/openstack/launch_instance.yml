@@ -7,7 +7,7 @@
       state: present
       name: "{{ instance_name }}"
       image: "{{ image_name }}"
-      key_name: "{{ pubkey_name }}"
+      key_name: pubkey
       wait: yes
       flavor: "{{ flavor_name }}"
       security_groups:
@@ -15,18 +15,26 @@
        - remotesec1
       network: "{{ network_name }}"
       auto_ip: false
-      userdata: |
-        #ps1
-        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+      userdata: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
       meta:
-        hostname=winad1.example.com
+        group=windows
     register: os_server_instance
+#    async: 7200
+#    poll: 0
 
-  - name: debug os_server_instance
-    debug: var=os_server_instance
+#  - name: Wait for instance creation to complete
+#    async_status: jid={{ item.ansible_job_id }}
+#    register: instances
+#    until: instances.finished
+#    retries: 300
+#    delay: 10
+#    loop:
+#    - "{{ os_server_instance }}"
 
-#  - name: Add Host To Inventory
-#    add_host:
-#      groups: windows
-#      name: "{{ os_server_instance.openstack.private_v4 }}"
-
+  - name: Waiting for servers to come online
+    wait_for:
+#      host: "{{ item.openstack.private_v4|default(item.openstack.interface_ip) }}"
+      host: "{{ os_server_instance.openstack.private_v4 }}"
+      port: 5986
+      timeout: 600
+#    loop: "{{ os_server_instance.openstack.private_v4 }}"

@@ -1,5 +1,10 @@
 - name: Install IIS Service
   hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
   tasks:
   - name: Install IIS Service
     win_feature:
@@ -11,8 +16,20 @@
        state: started
   - name: IIS Welcome Page
     win_copy:
-       content: "Hello from {{ ansible_facts['fqdn']\n }}"
+       src: files/index.html
+      # content: "Hello from {{ ansible_facts['fqdn']\n }}"
        dest: C:\Inetpub\wwwroot\index.html
+
+  - name: IIS Pic Update 1
+    win_copy:
+       src: files/Arjun_Ansible-1.jpeg
+       dest: C:\Inetpub\wwwroot\Arjun_Ansible-1.jpeg
+
+  - name: IIS Pic Update 2
+    win_copy:
+       src: files/Arjun_Ansible-2.jpeg
+       dest: C:\Inetpub\wwwroot\Arjun_Ansible-2.jpeg
+
   - name: Display the web url
     debug:
       msg: "http://{{ ansible_host }}"

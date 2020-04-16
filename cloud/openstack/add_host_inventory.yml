@@ -1,0 +1,28 @@
+- hosts: ansibletower-1.example.com
+  vars:
+  tasks: 
+   - name: Create Inventory
+     tower_inventory:
+       name: "Foo Inventory"
+       description: "Our Foo Cloud Servers"
+       organization: "Default"
+       state: present
+   - name: Create Group
+     tower_group: 
+       inventory: "Foo Inventory" 
+       name:  Testes 
+     register: fs_group 
+   - name: Create Host
+     tower_host:
+       inventory: "Foo Inventory" 
+       name: "host"  
+     register: fs_host 
+
+   - name: debug fs group
+     debug: var=fs_group
+   - name: debug fs host
+     debug: var=fs_host
+
+   - name: Associate host group 
+     shell: tower-cli host associate  --host "{{fs_host.id}}" --group "{{fs_group.id}}"
+
