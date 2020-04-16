@@ -3,8 +3,7 @@
 
 [windows:vars]
 ansible_connection=winrm
-ansible_user=Administrator
+ansible_user=ansible
 ansible_winrm_server_cert_validation=ignore
 ansible_become=false
 ansible_winrm_transport=credssp
-ansible_password=redhat@123
