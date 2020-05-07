@@ -1,0 +1,6 @@
+- name: IOS Device Backup
+  hosts: cs01
+  tasks:
+  - name: Backup IOS Device
+    ios_config:
+      backup: true

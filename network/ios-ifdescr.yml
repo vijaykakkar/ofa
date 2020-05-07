@@ -1,0 +1,15 @@
+- name: Set Interface Description For Routers
+  hosts: cs01
+  tasks:
+  - name: set interface description
+    ios_interface:
+      aggregate: "{{ interfaces }}"
+
+  - name: get interface description
+    ios_command:
+      commands:
+      - show interface | include Description
+    register: results
+
+  - name: show interface description
+    debug: var=results.stdout

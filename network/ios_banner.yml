@@ -1,0 +1,10 @@
+- name: Set Banner on IOS Devices
+  hosts: cs01
+  tasks:
+  - name: set banner motd
+    ios_banner:
+      banner: login
+      text: |
+          “It's not safe here. 
+          Get lost from here.”
+      state: present
