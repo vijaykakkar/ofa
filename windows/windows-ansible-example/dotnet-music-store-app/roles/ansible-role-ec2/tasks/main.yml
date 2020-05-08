@@ -1,0 +1,43 @@
+---
+- name: Create EC2 security group
+  ec2_group:
+    name: "{{ ec2_security_group }}"
+    description: all ports open
+    region: "{{ ec2_region }}"
+    vpc_id: "{{ ec2_vpc_id }}"
+    rules:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  when: ec2_exact_count >= 1
+  tags:
+    - always
+    - provision
+
+- include_tasks: "{{ ec2_use_module }}_module.yml"
+
+- name: Wait for instance creation to complete
+  async_status: jid="{{ item.ansible_job_id }}"
+  register: instances
+  until: instances.finished
+  retries: "{{ instance_wait_retry_limit }}"
+  with_items: "{{ ec2_jobs.results }}"
+  tags:
+    - always
+    - provision
+
+- name: Waiting for servers to come online
+  wait_for:
+    host: "{{ item.instances[0].public_ip_address }}"
+    port: "{{ ansible_port }}"
+    timeout: "{{ instance_wait_connection_timeout }}"
+  with_items: "{{ instances.results }}"
+  when:
+    - instances is changed
+    - ec2_exact_count >= 1
+  ignore_errors: yes
+  tags:
+    - always
+    - provision
