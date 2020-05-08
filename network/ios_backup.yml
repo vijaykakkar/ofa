@@ -4,3 +4,5 @@
   - name: Backup IOS Device
     ios_config:
       backup: true
+  - name: archive backup
+    shell: scp -r backup/cs01* cloud-user@192.168.0.10:~/backup/

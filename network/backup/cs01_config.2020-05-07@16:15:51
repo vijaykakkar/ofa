@@ -1,13 +1,12 @@
 Building configuration...
 
-Current configuration : 1484 bytes
+Current configuration : 1240 bytes
 !
-! Last configuration change at 14:54:50 UTC Fri Feb 14 2020
+! Last configuration change at 14:56:18 UTC Thu May 7 2020
 !
 version 16.3
 service timestamps debug datetime msec
 service timestamps log datetime msec
-service password-encryption
 no platform punt-keepalive disable-kernel-core
 platform console virtual
 !
@@ -17,8 +16,6 @@ boot-start-marker
 boot-end-marker
 !
 !
-enable secret 5 $1$aIQn$.Qc/BtNOH.ARYTMnM07B5/
-enable password 7 13041901020E082F
 !
 no aaa new-model
 !
@@ -60,13 +57,13 @@ multilink bundle-name authenticated
 !
 !
 !
-license udi pid CSR1000V sn 9JS2R4H16H9
+license udi pid CSR1000V sn 92MHGASSB3Y
 diagnostic bootup level minimal
 !
 spanning-tree extend system-id
 !
 !
-username ansible privilege 15 password 7 02070A4802040324
+username ansible privilege 15 password 0 ansible
 !
 redundancy
 !
@@ -130,20 +127,13 @@ control-plane
 line con 0
  stopbits 1
 line vty 0
- password 7 101F5C
  login local
  transport input ssh
 line vty 1
- password 7 101F5C
  login local
  length 0
  transport input ssh
 line vty 2 4
- password 7 101F5C
- login local
- transport input ssh
-line vty 5 15
- password 7 101F5C
  login local
  transport input ssh
 !

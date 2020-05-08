@@ -1,0 +1,11 @@
+- name: set the logging target
+  hosts: cs01
+  connection: network_cli
+  tasks:
+  - name: set logging
+    ios_config:
+      lines:
+        - service timestamps log datetime
+        - service timestamps debug datetime
+        - logging {{ syslog_ipv4addr }}
+        - logging trap 7
