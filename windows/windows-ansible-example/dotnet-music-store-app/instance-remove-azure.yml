@@ -1,0 +1,27 @@
+- name: Remove music store app
+  hosts: '*iis'
+  gather_facts: no
+  become: no
+  vars:
+    azure_lb_type: app_gateway
+  roles:
+    - role: azure_{{ azure_lb_type }}
+      role_action: deprovision
+      ignore_errors: yes
+
+- name: Remove Windows Instances
+  hosts: all
+  gather_facts: False
+  connection: local
+  vars:
+    ansible_ssh_password: ''
+  become: no
+  vars_files:
+    - node-config/nodes-azure.yml
+
+  roles:
+    - role: ansible-role-azure
+      role_action: deprovision
+      use_availability_set: yes
+      delegate_to: localhost
+      run_once: yes
