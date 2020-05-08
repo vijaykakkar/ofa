@@ -1,0 +1,65 @@
+import json
+import os
+{{ ansible_managed | comment }}
+
+{% if netbox_metrics_enabled %}
+if "prometheus_multiproc_dir" in os.environ:
+    try:
+        import prometheus_client
+        import uwsgi
+        prometheus_client.values.ValueClass = prometheus_client.values.MultiProcessValue(
+            _pidFunc=uwsgi.worker_id)
+    except ImportError:
+        pass  # not running in uwsgi
+{% endif %}
+
+DATABASE = {
+    'NAME': '{{ netbox_database }}',
+    'USER': '{{ netbox_database_user }}',
+{% if netbox_database_host is defined %}
+    'PASSWORD': '{{ netbox_database_password }}',
+    'HOST':  '{{ netbox_database_host }}',
+    'PORT': '{{ netbox_database_port }}',
+{% else %}
+    {% if netbox_database_password is defined %}
+    'PASSWORD': '{{ netbox_database_password }}',
+    {% endif %}
+    'HOST': '{{ netbox_database_socket }}',
+{% endif %}
+    'CONN_MAX_AGE': {{ netbox_database_conn_age }},
+}
+
+REDIS = {
+    'webhooks': {
+        'HOST': '{{ netbox_redis_host }}',
+        'PORT': {{ netbox_redis_port }},
+        'PASSWORD': '{{ netbox_redis_password }}',
+        'DATABASE': {{ netbox_redis_database }},
+        'DEFAULT_TIMEOUT': {{ netbox_redis_default_timeout }},
+        'SSL': {{ netbox_redis_ssl_enabled }},
+    },
+    'caching': {
+        'HOST': '{{ netbox_redis_cache_host }}',
+        'PORT': {{ netbox_redis_cache_port }},
+        'PASSWORD': '{{ netbox_redis_cache_password }}',
+        'DATABASE': {{ netbox_redis_cache_database }},
+        'DEFAULT_TIMEOUT': {{ netbox_redis_cache_default_timeout }},
+        'SSL': {{ netbox_redis_cache_ssl_enabled }},
+    }
+}
+
+{% if netbox_metrics_enabled %}
+METRICS_ENABLED = True
+{% endif %}
+
+{% for setting, value in netbox_config.items() %}
+{% if value in [True, False] %}
+{{ setting }} = {{ 'True' if value else 'False' }}
+{% elif value is string or value is number %}
+{{ setting }} = {{ value | to_nice_json }}
+{% else %}
+{{ setting }} = json.loads(r'''{{ value | to_json }}''')
+{% endif %}
+{% endfor %}
+
+# vim: ft=python
