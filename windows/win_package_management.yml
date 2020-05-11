@@ -9,6 +9,5 @@
   tasks:
   - name: Manage Windows Packages
     win_chocolatey:
-      name: "{{ item }}"
+      name: "{{ pkg_name }}"
       state: "{{ state }}"
-    loop: "{{ pkg_name }}"
