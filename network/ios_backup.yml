@@ -1,5 +1,6 @@
 - name: IOS Device Backup
   hosts: "{{ HOSTS }}"
+  gather_facts: false
   tasks:
   - name: Backup IOS Device
     ios_config:
