@@ -1,8 +1,13 @@
 - name: IOS Device Backup
-  hosts: cs01
+  hosts: "{{ HOSTS }}"
   tasks:
   - name: Backup IOS Device
     ios_config:
       backup: true
+    register: ios_backup
+
   - name: archive backup
     shell: scp -r backup/cs01* cloud-user@192.168.0.10:~/backup/
+
+  - name: debug ios backup
+    debug: var=ios_backup
