@@ -1,5 +1,5 @@
 - name: Install SQL 2019
-  hosts: all
+  hosts: "{{ HOSTS }}"
   vars:
     ansible_port: 5986
     ansible_connection: winrm
