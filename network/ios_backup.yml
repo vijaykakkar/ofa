@@ -8,7 +8,7 @@
     register: ios_backup
 
   - name: archive backup
-    shell: scp -r backup/cs01* cloud-user@192.168.0.10:~/backup/
+    shell: scp -o "StrictHostKeyChecking=no" -r backup/cs01* cloud-user@192.168.0.10:~/backup/
 
   - name: debug ios backup
     debug: var=ios_backup
