@@ -1,25 +1,25 @@
 - name: Register Clients to Red Hat Satellite
-  hosts: all
+  hosts: "{{ HOSTS }}"
   tasks:
 
-#  - name: Unregister Any old registration
-#    redhat_subscription:
-#      state: absent
-  - name: Disable all the repos
-    shell: subscription-manager repos --disable='*'
-
-  - name: Uninstall Consumer RPMS
-    shell: rpm -e katello-ca-consumer-satellite6.example.com-1.0-1.noarch
-    ignore_errors: true
+  - name: Configure DNS Lookup
+    copy:
+      src: hosts
+      dest: /etc/hosts
 
   - name: Install Red Hat Satellite Consumer RPM
     shell: rpm -Uvh http://192.168.0.9/pub/katello-ca-consumer-latest.noarch.rpm
+
+
+  - name: Disable all the repos
+    shell: subscription-manager repos --disable='*'
+    ignore_errors: true
 
   - name: Run the registration on RHEL7 Clients
     redhat_subscription:
       state: present
       org_id: "RHCanada"
-      activationkey: rhel7base-ak
+      activationkey: "{{ key_name }}"
       force_register: true
     when: ansible_distribution_major_version == "7"
 
@@ -27,7 +27,7 @@
     redhat_subscription:
       state: present
       org_id: "RHCanada"
-      activationkey: rhel8base-ak
+      activationkey: "{{ key_name }}"
       force_register: true
     when: ansible_distribution_major_version == "8"
 
