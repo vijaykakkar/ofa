@@ -1,4 +1,4 @@
-- name: Launch OpenStack Instance
+- name: Delete OpenStack Instance
   hosts: localhost
   gather_facts: false
   tasks:
