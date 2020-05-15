@@ -6,3 +6,7 @@
     os_server:
       state: absent
       name: "{{ instance_name }}"
+    register: os_server_delete
+
+  - name: debug os server delete
+    debug: var=os_server_delete
