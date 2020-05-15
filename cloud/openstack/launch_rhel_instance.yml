@@ -1,0 +1,34 @@
+- name: Launch RHEL Instane on OpenStack
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Launch a New Instance with Network and Metadata
+    os_server:
+      state: present
+      name: "{{ instance_name }}"
+      image: "{{ image_name }}"
+      key_name: pubkey
+      wait: yes
+      flavor: "{{ flavor_name }}"
+      security_groups:
+       - default
+       - remotesec1
+      network: "{{ network_name }}"
+      auto_ip: false
+      meta:
+        group=rhel
+      userdata: templates/rhel_instance.sh
+    register: os_server_instance
+
+  - name: Waiting for servers to come online
+    wait_for:
+      host: "{{ os_server_instance.openstack.private_v4 }}"
+      port: 5986
+      timeout: 600
+    register: os_server_online
+
+  - name: debug os server instance
+    debug: var=os_server_instance
+
+  - name: debug os server online
+    debug: var=os_server_online
