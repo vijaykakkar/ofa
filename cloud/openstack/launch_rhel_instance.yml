@@ -23,7 +23,7 @@
   - name: Waiting for servers to come online
     wait_for:
       host: "{{ os_server_instance.openstack.private_v4 }}"
-      port: 5986
+      port: 22
       timeout: 600
     register: os_server_online
 
