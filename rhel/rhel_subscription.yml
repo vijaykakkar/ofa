@@ -4,7 +4,7 @@
 
   - name: Configure DNS Lookup
     copy:
-      src: hosts
+      src: files/hosts
       dest: /etc/hosts
 
   - name: Install Red Hat Satellite Consumer RPM
