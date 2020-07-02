@@ -1,0 +1,11 @@
+- name: windows service status
+  hosts: "{{ HOSTS }}"
+  tasks:
+  - name: check service status
+    win_service:
+      name: "{{ svc_name }}"
+      state: "{{ svc_state }}"
+    register: win_service_status
+
+  - name: debug service status
+    debug: var=win_service_status
