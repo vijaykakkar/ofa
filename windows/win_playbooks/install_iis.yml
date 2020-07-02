@@ -30,6 +30,15 @@
        src: files/Arjun_Ansible-2.jpeg
        dest: C:\Inetpub\wwwroot\Arjun_Ansible-2.jpeg
 
+  - name: Firewall rule to allow HTTP on TCP port 80
+    win_firewall_rule:
+      name: HTTP
+      localport: 80
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
   - name: Display the web url
     debug:
       msg: "http://{{ ansible_host }}"
