@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "./ec2.py", line 171, in <module>
+    from ansible.module_utils import ec2 as ec2_utils
+ImportError: No module named ansible.module_utils
