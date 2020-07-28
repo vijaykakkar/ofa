@@ -14,7 +14,7 @@
 - name: Gather Facts from F5
   hosts: f5
   gather_facts: false
-  connections: local
+  connection: local
   tasks:
     - name: Collect BIG-IP Facts
       f5networks.f5_modules.bigip_device_info: # collection path
