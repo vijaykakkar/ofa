@@ -1,0 +1,8 @@
+- import_playbook: provision-music-store-app.yml
+
+- name: set up loadbalancer and add nodes
+  hosts: '*iis'
+  become: no
+  gather_facts: no
+  roles:
+    - ec2_elb_provision

@@ -1,0 +1,13 @@
+- name: Ping Connectivty Test
+  hosts: "{{ hosts }}"
+  connection: network_cli
+  tasks:
+  - name: Test Reachablity
+    ios_ping:
+      dest: "{{ item }}"
+    loop: "{{ ipv4_addresses | select('match', '^192\\.168\\.0\\..*') | list }}"
+    #when: ansible_network_os == 'ios'
+    register: ping_results
+
+  - name: debug ping
+    debug: var=ping_results

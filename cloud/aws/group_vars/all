@@ -1,0 +1,9 @@
+aws_access_key: AKIAINIDY54TGWAUQUZQ
+aws_secret_key: 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
+key_name: amazon-aws-key
+security_group: secgroup1
+aws_region: ap-south-1
+vpc_id: vpc-3010e559
+ami_id: ami-0889b8a448de4fc44
+instance_type: t2.micro
+my_local_cidr_ip: 203.194.44.0/24

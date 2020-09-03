@@ -1,0 +1,61 @@
+- name: Launch OpenStack Instance
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Launch a New Instance with Network and Metadata
+    os_server:
+      state: present
+      name: "{{ instance_name }}"
+      image: "{{ image_name }}"
+      key_name: "{{ pubkey_name }}"
+      wait: yes
+      flavor: "{{ flavor_name }}"
+      security_groups:
+       - default
+       - remotesec1
+      network: "{{ network_name }}"
+      auto_ip: false
+#        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+#        Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP-PUBLIC' -RemoteAddress Any
+#        netsh advfirewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action-allow
+#        netsh advfirewall firewall set rule name="Allow WinRM HTTPS" new profile=any
+      userdata: user_data: "{{ lookup('template', 'templates/userdata.txt.j2') }}"
+#        #ps1
+#         powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
+#          $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+#          $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+#          (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+#          powershell.exe -ExecutionPolicy ByPass -File $file -DisableBasicAuth -EnableCredSSP
+#         Set-Service -Name "WinRM" -StartupType Automatic
+#         Start-Service -Name "WinRM" -ErrorAction Stop
+#         netsh advfirewall add rule profile=any name="Allow WinRM HTTP" dir=in localport=5985 protocol=TCP action=allow
+#         netsh advfirewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
+#         Enable-WSManCredSSP -Role Server -Force
+      meta:
+        group=windows
+    register: os_server_instance
+
+
+  - name: Wait for instance creation to complete
+    async_status: jid="{{ item.ansible_job_id }}"
+    register: instances
+    until: instances.finished
+    retries: 300
+    delay: 10
+    with_items: "{{ os_server_instance.results }}"  
+
+  - name: debug os_server_instance
+    debug: var=os_server_instance
+
+#  - name: Add Host to a Group
+#    tower_host:
+#      name: "{{ os_server_instance.openstack.name }}"
+#      description: Windows Host
+#      inventory: OpenStack
+#      state: present
+#      tower_config_file: /home/cloud-user/.tower_cli.cfg
+#      variables:
+#        ansible_host: "{{ os_server_instance.openstack.private_v4 }}"
+
+#  - name: Associate host group 
+#    shell: tower-cli host associate  --host "{{ os_server_instance.openstack.private_v4 }}" --group windows

@@ -1,0 +1,28 @@
+- name: Launch an EC2 instance In Mumbai Region
+  connection: local
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Create an EC2 instance
+    ec2:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      key_name: "{{ key_name }}"
+      region: "{{ aws_region }}"
+      group_id: sg-0427bada0be7c8e1b
+      instance_type: "{{ instance_type }}"
+      image: "{{ ami_id }}"
+      wait: yes
+      volumes:
+        - device_name: /dev/xvda	
+          volume_type: gp2
+          volume_size: 8
+          delete_on_termination: true
+      exact_count: 1
+      count_tag:
+         Name: do457-aws-demo
+      instance_tags:
+         Name: do457-aws-demo
+    register: ec2
+  - name: debug instance
+    debug: var=ec2

@@ -1,0 +1,15 @@
+---
+# defaults file for ec2
+ec2_name_prefix: DEMO
+ec2_security_group: sg-51151d78
+ec2_region: us-east-1
+ec2_vpc_id: vpc-71547a0b
+ec2_vpc_subnet_id: subnet-16170571
+ec2_key_name: aws-rh-account-key
+ec2_exact_count: 1
+ec2_wait: yes
+ansible_port: 22
+instance_wait_retry_limit: 300
+instance_wait_connection_timeout: 300
+ec2_use_module: ec2_instance
+

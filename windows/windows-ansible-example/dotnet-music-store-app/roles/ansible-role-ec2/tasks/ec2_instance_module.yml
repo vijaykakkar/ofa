@@ -1,0 +1,29 @@
+---
+- name: Create or destroy EC2 instances
+  ec2_instance:
+    name: "{{ ec2_name_prefix }}-{{ item.pod_name | default('') }}-{{ item.role }}-{{ item.name }}"
+    key_name: "{{ ec2_key_name }}"
+    region: "{{ ec2_region }}"
+    vpc_subnet_id: "{{ ec2_vpc_subnet_id | default(omit) }}"
+    instance_type: "{{ item.instance_type }}"
+    security_group: "{{ ec2_security_group }}"
+    network:
+      assign_public_ip: true
+    image_id: "{{ item.image }}"
+    tags:
+      environment: "{{ environment | default('') }}"
+      role: "{{ item.role }}"
+      app: "{{ item.app_name }}"
+      pod: "{{ item.pod_name | default('') }}"
+      user: "{{ item.username | default('') }}"
+    wait: "{{ ec2_wait }}"
+    user_data: "{{ item.user_data | default(omit) }}"
+    volumes: "{{ item.volumes | default(omit) }}"
+  with_items:
+    - "{{ nodes }}"
+  register: ec2_jobs
+  async: 7200
+  poll: 0
+  tags:
+    - always
+    - provision

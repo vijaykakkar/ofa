@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Orcun Atakan
+  min_ansible_version: 1.2
+  description: Ansible galaxy role for creating ec2 instances
+  company: Red Hat
+
+  license: license (GPLv2, CC-BY, etc)
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+
+  categories:
+  - all
+
+  galaxy_tags:
+    - ec2
+
+dependencies: []

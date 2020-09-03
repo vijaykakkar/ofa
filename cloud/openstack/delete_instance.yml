@@ -1,4 +1,4 @@
-- name: Launch OpenStack Instance
+- name: Delete OpenStack Instance
   hosts: localhost
   gather_facts: false
   tasks:
@@ -6,3 +6,7 @@
     os_server:
       state: absent
       name: "{{ instance_name }}"
+    register: os_server_delete
+
+  - name: debug os server delete
+    debug: var=os_server_delete

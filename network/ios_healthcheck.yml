@@ -1,0 +1,16 @@
+- name: IOS Health Check
+  hosts: cs01
+  tasks:
+  - name: ios device health check
+    ios_command:
+       commands:
+         - show version | include uptime
+         - show ip domain
+         - show clock
+         - show ip name-server
+         - show ip interface brief GigabitEthernet1
+#         - show proc mem platform | include System memory
+    register: ios_healthcheck
+
+  - name: show ios_healthcheck
+    debug: msg="{{ ios_healthcheck.stdout }}"
