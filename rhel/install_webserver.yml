@@ -19,3 +19,8 @@
     copy:
       content: Apache is running fine
       dest: /var/www/html/index.html
+
+
+  - name: debug the host IP
+    debug:
+      msg: "http://{{ansible_fqdn}}"
