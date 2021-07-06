@@ -35,8 +35,6 @@
         - 192.168.100.254
         - 8.8.8.8
         type: static
-      wait_for_ip_address: True
-      wait_for_ip_address_timeout: 600
     delegate_to: localhost
     register: vm_deploy
 
