@@ -21,10 +21,10 @@
       hardware:
         memory_mb: 512
         num_cpus: 1
-        max_connections: 5
-        hotadd_cpu: True
-        hotremove_cpu: True
-        hotadd_memory: False
+#        max_connections: 5
+#        hotadd_cpu: True
+#        hotremove_cpu: True
+#        hotadd_memory: False
       networks:
       - name: VM Network
         ip: "{{ instance_ip }}"
