@@ -6,4 +6,5 @@
      vmware_guest:
        name: "{{ vm_name }}"
        state: absent
+       force: true
      delegate_to: localhost
