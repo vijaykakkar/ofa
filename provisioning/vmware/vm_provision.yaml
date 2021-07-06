@@ -4,7 +4,7 @@
   tasks:
 
   - name: Create a virtual machine from a template
-    community.vmware.vmware_guest:
+    vmware_guest:
 #      hostname: "{{ vcenter_hostname }}"
 #      username: "{{ vcenter_username }}"
 #      password: "{{ vcenter_password }}"
