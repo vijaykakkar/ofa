@@ -25,7 +25,6 @@
         hotadd_cpu: True
         hotremove_cpu: True
         hotadd_memory: False
-        version: 12 # Hardware version of virtual machine
       networks:
       - name: VM Network
         ip: "{{ instance_ip }}"
