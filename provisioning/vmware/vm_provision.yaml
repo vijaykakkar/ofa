@@ -8,6 +8,8 @@
 #      hostname: "{{ vcenter_hostname }}"
 #      username: "{{ vcenter_username }}"
 #      password: "{{ vcenter_password }}"
+      datacenter: RHToronto
+      cluster: Shadowman
       folder: /AnsibleAutomation
       name: "{{ instance_name }}"
       state: poweredon
