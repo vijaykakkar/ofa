@@ -1,5 +1,5 @@
 - name: Deploy a Virtual Machine on vSphere
-  hosts: vcenter.yyz.lab.local
+  hosts: localhost
   gather_facts: no
   tasks:
 
