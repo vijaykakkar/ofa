@@ -12,8 +12,6 @@
       name: "{{ instance_name }}"
       state: poweredon
       template: RHEL8
-      proxy_host: 192.168.100.100
-      proxy_port: 3128
       disk:
       - size_gb: 10
         type: thin
