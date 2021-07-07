@@ -5,9 +5,7 @@
 
   - name: Create a virtual machine from a template
     vmware_guest:
-#      hostname: "{{ vcenter_hostname }}"
-#      username: "{{ vcenter_username }}"
-#      password: "{{ vcenter_password }}"
+      validate_certs: no
       datacenter: RHToronto
       cluster: Shadowman
       folder: /AnsibleAutomation
@@ -30,10 +28,8 @@
         ip: "{{ instance_ip }}"
         netmask: 255.255.255.0
         gateway: 192.168.100.100
-        dns_servers:
-        - 192.168.100.254
-        - 8.8.8.8
         type: static
+      wait_for_ip_address: true
     delegate_to: localhost
     register: vm_deploy
 
