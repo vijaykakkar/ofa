@@ -1,7 +1,7 @@
 - name: Manage Local User on Windows
   hosts: "{{ HOSTS }}"
   tasks:
-  - name: {{ user_state }} {{ user_name }} Local User
+  - name: "{{ user_state }}" "{{ user_name }}" Local User
     win_user:
       name: "{{ user_name }}"
       state: "{{ user_state }}"
