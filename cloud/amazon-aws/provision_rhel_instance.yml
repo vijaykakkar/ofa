@@ -41,7 +41,7 @@
     - name: Create EC2 instances for node
       ec2_instance:
         region: "{{ ec2_region }}"
-        group: "aws-demo-sg"
+        security_group: "aws-demo-sg"
         key_name: "aws-demo-key"
         vpc_subnet_id: "{{ ec2_vpc_subnet }}"
         network:
