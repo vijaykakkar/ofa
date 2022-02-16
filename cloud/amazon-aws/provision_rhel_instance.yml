@@ -8,7 +8,7 @@
   # The paramater region will be set for all ec2 modules by specifying it here under module_defaults
   vars:
     instance_name: "TEST_INSTANCE"
-    owner_tag: "unknown"
+    owner_tag: "AnsibleRoot"
     ec2_region: "{{ your_region | default('ca-central-1') }}"
   tasks:
 
@@ -46,7 +46,7 @@
         vpc_subnet_id: "{{ ec2_vpc_subnet }}"
         assign_public_ip: yes
         instance_type: t2.medium
-        image: "{{ server01_ami.image_id }}"
+        image_id: "{{ server01_ami.image_id }}"
         wait: yes
         exact_count: 1
         instance_tags:
