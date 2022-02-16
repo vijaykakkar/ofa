@@ -1,12 +1,12 @@
-- name: Create AWS resources
+- name: Create AWS Security Group
   hosts: localhost
   connection: local
   gather_facts: False
   tasks:
   - name: Create a security group
     ec2_group:
-     name: DO457Group
-     description: "Ansible Security Group"
+     name: "{{ group_name }}"
+     description: "Security Group"
      region: "{{ aws_region }}"
      vpc_id: "{{ vpc_id }}"
      aws_access_key: "{{ aws_access_key }}"
@@ -15,7 +15,7 @@
        - proto: all
          cidr_ip: "{{ my_local_cidr_ip }}"
        - proto: all
-         group_name: DO457Group
+         group_name: "{{ group_name }}"
      rules_egress:
         - proto: all
           cidr_ip: 0.0.0.0/0
