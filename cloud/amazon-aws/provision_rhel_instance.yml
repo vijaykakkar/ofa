@@ -17,7 +17,7 @@
     # Using ec2_ami_facts allows us to find a particular ami instance id regardless of region
     # Look for owner 309956199498 to find official Red Hat AMIs
     - name: find ami instance-id for RHEL
-      amazon.aws.ec2_ami_facts:
+      ec2_ami_info:
         region: "{{ ec2_region }}"
         owners: 309956199498
         filters:
@@ -37,7 +37,7 @@
    # key_name refers to the SSH key pair to use for this instance
    # vpc_subnet_id refers to the Virtual Private Cloud (VPC) subnet idenitifer to tie the instance to
     - name: Create EC2 instances for node
-      amazon.aws.ec2_instance:
+      ec2_instance:
         region: "{{ ec2_region }}"
         group: "aws-demo-sg"
         key_name: "aws-demo-key"
