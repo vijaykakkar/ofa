@@ -25,7 +25,7 @@
 
 # VPC or Virtual Private Cloud.  The instance will be tied to a subnet that belongs to this particular VPC
 - name: Create AWS VPC aws-demo-vpc
-  amazon.aws.ec2_vpc_net:
+  ec2_vpc_net:
     name: "aws-demo-vpc"
     cidr_block: "192.168.0.0/24"
     region: "{{ ec2_region }}"
@@ -35,7 +35,7 @@
 
 # If a secruity group is not created, instances will be tied to the Default secruity grouop that allows all traffic (non-secure)
 - name: Create EC2 security group aws-demo-sg
-  amazon.aws.ec2_group:
+  ec2_group:
     name: "aws-demo-sg"
     region: "{{ ec2_region }}"
     description: AWS demo SG for the demo
@@ -51,7 +51,7 @@
 
 # This task is subdiving up the 192.168.0.0/24 and getting a smaller chunk, a /28
 - name: Create subnet for aws-demo-vpc
-  amazon.aws.ec2_vpc_subnet:
+  ec2_vpc_subnet:
     region: "{{ ec2_region }}"
     vpc_id: "{{ create_vpc.vpc.id }}"
     cidr: "192.168.0.0/28"
