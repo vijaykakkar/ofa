@@ -3,6 +3,8 @@
   connection: local
   hosts: localhost
   gather_facts: false
+  collections:
+    - amazon.aws
   # The paramater region will be set for all ec2 modules by specifying it here under module_defaults
   module_defaults:
     group/aws:
